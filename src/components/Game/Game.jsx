@@ -9,12 +9,29 @@ const Game = () => {
         <form className="form" action="/" method="post">
           <fieldset className="form__fieldset">
             <legend className="form__legend">Wyniki:</legend>
+            <div className="form__field">
+              <label className="form__field-item" htmlFor="number_attempts">
+                Ilość prób:{' '}
+              </label>
+              <input
+                className="form__field-item"
+                id="number_attempts"
+                name="number_attempts"
+              />
+            </div>
 
-            <label htmlFor="number_attempts">Ilość prób: </label>
-            <input id="number_attempts" name="number_attempts" />
+            <div className="form__field">
+              <label className="form__field-item" htmlFor="number_hits">
+                Ilość trafień:{' '}
+              </label>
+              <input
+                className="form__field-item"
+                id="number_hits"
+                name="number_hits"
+              />
+            </div>
 
-            <label htmlFor="number_hits">Ilość trafień: </label>
-            <input id="number_hits" name="number_hits" />
+            <input className="form__submit" type="submit" value="Wyślij" />
           </fieldset>
         </form>
       </div>
