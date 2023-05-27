@@ -1,9 +1,11 @@
 import logo from '../../assets/logo.jpg'
+import Hamburger from '../Hamburger/Hamburger';
 
 const Header = () => {
 
 
   return (
+    <>
     <header className="header">
       <img src={logo} alt="logo" className="header__logo" />
       <h1 className="header__heading">Gra w trzy karty</h1>
@@ -15,7 +17,9 @@ const Header = () => {
         </ul>
       </nav>
     </header>
-  )
-}
+    <Hamburger/>
+    </>
+  );
+};
 
 export default Header;
