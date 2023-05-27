@@ -21,17 +21,3 @@
     align-self: center;
   }
 }
-
-.menu {
-  visibility: hidden;
-  justify-self: center;
-  align-self: center;
-
-  &__list {
-    display: flex;
-  }
-
-  &__link {
-    color: inherit;
-  }
-}
