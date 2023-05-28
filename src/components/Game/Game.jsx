@@ -1,8 +1,40 @@
 import damakaro from '../../assets/damakaro.jpg';
 import damapik from '../../assets/damapik.jpg';
 import damakier from '../../assets/damakier.jpg';
+import back from '../../assets/back.jpg';
+import { useState } from 'react';
 
 const Game = () => {
+  const [btnStart, btnReset] = document.querySelectorAll('.buttons__btn');
+  console.log(btnStart);
+
+  const [btnS, setStart] = useState(btnStart);
+
+  const start = () => {
+    const cards = document.querySelectorAll('.cards__card');
+
+    btnS.disabled = true;
+    btnReset.disabled = false;
+
+    cards.forEach((card) => {
+      card.setAttribute('src', `${back}`);
+
+      // card.classList.toggle('cardReverseRotate');
+    });
+  };
+  const reset = () => {
+    const images = [`${damakaro}`, `${damapik}`, `${damakier}`];
+    const cards = document.querySelectorAll('.cards__card');
+    const [btnStart, btnReset] = document.querySelectorAll('.buttons__btn');
+    btnStart.disabled = false;
+    btnReset.disabled = true;
+
+    cards.forEach((card, i) => {
+      card.classList.add('cardRotate');
+      card.setAttribute('src', images[i]);
+    });
+  };
+
   return (
     <>
       <div className="results">
@@ -43,8 +75,12 @@ const Game = () => {
       </div>
 
       <div className="buttons">
-        <button className="buttons__btn">Start</button>
-        <button className="buttons__btn">Reset</button>
+        <button className="buttons__btn" onClick={start}>
+          Start
+        </button>
+        <button className="buttons__btn" onClick={reset} disabled>
+          Reset
+        </button>
       </div>
     </>
   );

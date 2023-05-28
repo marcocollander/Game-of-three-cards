@@ -30,6 +30,7 @@
   display: grid;
   grid-template-columns: 3fr 3fr 3fr;
   grid-template-rows: 9fr;
+  transition: transform 0.5 linear;
 
   &__card {
     width: 90px;
@@ -48,5 +49,33 @@
     border-radius: 3px;
     border: none;
     letter-spacing: 1px;
+  }
+}
+
+.cardRotate {
+  animation: rotate 0.5s linear;
+}
+
+.cardReverseRotate {
+  animation: reverseRotate 0.5s linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(180deg);
+  }
+
+  to {
+    transform: rotateY(0);
+  }
+}
+
+@keyframes reverseRotate {
+  from {
+    transform: rotateY(180deg);
+  }
+
+  to {
+    transform: rotateY(0);
   }
 }
