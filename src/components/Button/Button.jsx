@@ -1,17 +1,11 @@
-import { useState } from 'react';
+const Button = ({name, disabled, clik}) => {
 
-const Toggle = () => {
-  // count it's state varaiable
-  const [count, setCount] = useState(0);
 
   return (
-    <div className="toggle">
-      <p className="toggle__paragraph">Kliknąłeś {count} razy </p>
-      <button className="toggle__btn" onClick={() => setCount(count + 1)}>
-        Start
+      <button className='buttons__btn' onClick={clik} disabled={disabled}>
+        {name}
       </button>
-    </div>
   );
 };
 
-export default Toggle;
+export default Button;

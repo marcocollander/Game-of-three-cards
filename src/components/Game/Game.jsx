@@ -1,86 +1,114 @@
-import damakaro from '../../assets/damakaro.jpg';
-import damapik from '../../assets/damapik.jpg';
-import damakier from '../../assets/damakier.jpg';
-import back from '../../assets/back.jpg';
-import { useState } from 'react';
+import Card from "../Card/Card.jsx";
+import Form from "../Form/Form.jsx";
+import Button from "../Button/Button.jsx";
+import damaKaro from '../../assets/damakaro.jpg'
+import damaPik from '../../assets/damapik.jpg'
+import damaKier from '../../assets/damakier.jpg'
+import back from '../../assets/back.jpg'
+import {useState} from "react";
 
 const Game = () => {
-  const [btnStart, btnReset] = document.querySelectorAll('.buttons__btn');
-  console.log(btnStart);
+  const [disabledStart, setDisabledStart] = useState(false)
+  const [disabledReset, setDisabledReset] = useState(true)
+  const [rotate, setRotate] = useState('')
+  const [cards, setCards] = useState([damaKaro, damaPik, damaKier])
+  const [flag, setFlag] = useState(false)
 
-  const [btnS, setStart] = useState(btnStart);
 
-  const start = () => {
-    const cards = document.querySelectorAll('.cards__card');
-
-    btnS.disabled = true;
-    btnReset.disabled = false;
-
-    cards.forEach((card) => {
-      card.setAttribute('src', `${back}`);
-
-      // card.classList.toggle('cardReverseRotate');
-    });
+  const clickStart = () => {
+    setDisabledStart(true);
+    setDisabledReset(false);
+    setCards([back, back, back])
+    setRotate('cardRotate')
+    setFlag(true);
   };
-  const reset = () => {
-    const images = [`${damakaro}`, `${damapik}`, `${damakier}`];
-    const cards = document.querySelectorAll('.cards__card');
-    const [btnStart, btnReset] = document.querySelectorAll('.buttons__btn');
-    btnStart.disabled = false;
-    btnReset.disabled = true;
-
-    cards.forEach((card, i) => {
-      card.classList.add('cardRotate');
-      card.setAttribute('src', images[i]);
-    });
+  const clickReset = () => {
+    setDisabledStart(false);
+    setDisabledReset(true);
+    setCards([damaKaro, damaPik, damaKier])
+    setRotate('cardReverseRotate');
   };
+
+  const calculateIndex = () => {
+    const i = Math.floor(Math.random() * 3);
+    console.log(i)
+    const numbers = [0, 1, 2];
+    let index = numbers.find((number) => number === i);
+    numbers.splice(index);
+    let j, k = 0
+    switch (numbers.length) {
+      case 0:
+        j = 1;
+        k = 2;
+        break;
+      case 1:
+        j = 0;
+        k = 2;
+        break;
+      case 2:
+        j = 1;
+        k = 0
+    }
+    return [i, j, k];
+  }
+  const clickCardOne = () => {
+    let [i] = calculateIndex();
+    setDisabledStart(false)
+    setFlag(true)
+    console.log(flag);
+    const images = [damaKaro, damaPik, damaKier]
+    setCards([images[i], back, back])
+    if (flag) {
+      setRotate('cardReverseRotate')
+    } else {
+      setRotate('cardRotate')
+    }
+  }
+  const clickCardTwo = () => {
+    let [j]  = calculateIndex()
+    setDisabledStart(false)
+    setFlag(false)
+    console.log(flag);
+    const images = [damaKaro, damaPik, damaKier]
+    setCards([back, images[j], back])
+    if (flag) {
+      setRotate('cardReverseRotate')
+      setFlag(false)
+    } else {
+      setRotate('cardRotate')
+      setFlag(false)
+    }
+  }
+  const clickCardThree = () => {
+    let [k]  = calculateIndex()
+    setDisabledStart(false)
+    setFlag(false)
+    console.log(flag);
+    const images = [damaKaro, damaPik, damaKier]
+    setCards([back, back, images[k]])
+    if (flag) {
+      setRotate('cardReverseRotate')
+      setFlag(false)
+    } else {
+      setRotate('cardRotate')
+      setFlag(false)
+    }
+  }
 
   return (
     <>
       <div className="results">
-        <form className="form" action="/" method="post">
-          <fieldset className="form__fieldset">
-            <legend className="form__legend">Wyniki:</legend>
-            <div className="form__field">
-              <label className="form__field-item" htmlFor="number_attempts">
-                Ilość prób:{' '}
-              </label>
-              <input
-                className="form__field-item"
-                id="number_attempts"
-                name="number_attempts"
-              />
-            </div>
-
-            <div className="form__field">
-              <label className="form__field-item" htmlFor="number_hits">
-                Ilość trafień:{' '}
-              </label>
-              <input
-                className="form__field-item"
-                id="number_hits"
-                name="number_hits"
-              />
-            </div>
-
-            <input className="form__submit" type="submit" value="Wyślij" />
-          </fieldset>
-        </form>
+        <Form/>
+        <div className="cards">
+          {/*{cards.map((card, i) => <Card  key={i} location={card} rotate={rotate} clickCard={clickCard} />)}*/}
+          <Card location={cards[0]} rotate={rotate} clickCard={clickCardOne}/>
+          <Card location={cards[1]} rotate={rotate} clickCard={clickCardTwo}/>
+          <Card location={cards[2]} rotate={rotate} clickCard={clickCardThree}/>
+        </div>
       </div>
-
-      <div className="cards">
-        <img className="cards__card" src={damakaro} alt="dama karo" />
-        <img className="cards__card" src={damapik} alt="dama pik" />
-        <img className="cards__card" src={damakier} alt="dama kier" />
-      </div>
-
       <div className="buttons">
-        <button className="buttons__btn" onClick={start}>
-          Start
-        </button>
-        <button className="buttons__btn" onClick={reset} disabled>
-          Reset
-        </button>
+        <Button clik={clickStart} name={'Start'} disabled={disabledStart}/>
+        <Button clik={clickReset} name={'Reset'} disabled={disabledReset}/>
       </div>
     </>
   );
